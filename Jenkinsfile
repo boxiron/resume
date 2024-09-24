@@ -1,15 +1,21 @@
 pipeline {
     agent any
 
+    environment {
+        BRANCH_NAME ='main'
+        GIT_URL = 'https://github.com/boxiron/resume.git'
+    }
+
 stages {
  stage('git checkout'){
     steps{
-        git branch: 'main', url: git branch: 'main', url: 'https://github.com/boxiron/resume.git'
+        git branch: "${BRANCH_NAME}", url: git branch: 'main', url: "${GIT_URL}"
     }
  }
- stage('test'){
+ stage('docker build'){
     steps{
-        sh 'echo test'
+        sh 'docker build -t resume .'
+        sh 'docker images'
     }
  }
 }
