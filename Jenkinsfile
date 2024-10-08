@@ -1,24 +1,16 @@
-pipeline {
-    agent any
+pipeline{
+    agent any 
 
-    environment {
-        BRANCH_NAME ='main'
-        GIT_URL = 'https://github.com/boxiron/resume.git'
+    stages {
+        stage('git checkout'){
+            steps{
+                git branch: 'main', url: 'https://github.com/boxiron/aws-cicd.git'
+            }
+        }
+        stage('test'){
+            steps{
+                sh 'echo test'
+            }
+        }
     }
-
-stages {
- stage('git checkout'){
-    steps{
-        git branch: "${BRANCH_NAME}", url: "${GIT_URL}"
-    }
- }
- stage('docker build'){
-    steps{
-        sh 'docker build -t resume .'
-        sh 'docker images'
-    }
- }
-}
-
-
 }
